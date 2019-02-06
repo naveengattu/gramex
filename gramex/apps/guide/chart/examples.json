@@ -296,11 +296,6 @@
     "dataset_url": "<%= absolute_url %>data/radial-donut.json"
   },
   {
-    "category": "Sankey charts",
-    "chart": "sankey",
-    "title": "Sankey"
-  },
-  {
     "category": "Scatter plots",
     "chart": "scatter-plot",
     "title": "Scatter Plot",
@@ -531,6 +526,11 @@
     "category": "Others",
     "chart": "wordcloud-2",
     "title": "Word Cloud 2"
+  },
+  {
+    "category": "Others",
+    "chart": "sankey",
+    "title": "Sankey"
   },
   {
     "category": "Others",
