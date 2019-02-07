@@ -7,7 +7,7 @@ var dataset_name, templates, mapper
 
 // dangling state TODO: refactor to inside actions
 $('.code div').show()
-$('#prop-editor').hide()
+// $('#prop-editor').hide()
 
 
 var view, json_file_spec, data_mapper
@@ -357,6 +357,18 @@ $('body')
         on_cols_fetch([csv_contents_converted, res[1]])
       })
   })
+  .on('click', '.publish', function() {
+    // generate unique url for current spec
+    // POST request to formhandler URL
+    $.post('/_chartogram/', JSON.stringify({
+        chartname: specName,
+        spec: model.vega_spec
+    })).done(function(response) {
+      // create an URL with response.id
+
+    })
+  })
+
 
 function getFileContent(file) {
   return new Promise(function (resolve) {
