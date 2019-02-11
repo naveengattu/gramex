@@ -4,7 +4,6 @@ import io
 import re
 import time
 import yaml
-import astor
 import sqlalchemy
 import pandas as pd
 import gramex.cache
@@ -14,7 +13,7 @@ from orderedattrdict import AttrDict
 from tornado.template import Template
 from gramex.config import PathConfig, app_log, str_utf8, locate
 from gramex.http import BAD_REQUEST
-from init import IDESTOREDB, CONFIG
+from init import IDESTOREDB, CONFIG, _DIR
 
 
 def db_setup():
@@ -27,7 +26,7 @@ def db_setup():
 db_setup()
 
 def randid():
-    return hexlify(os.urandom(24)).decode('ascii')
+    return hexlify(os.urandom(3)).decode('ascii')
 
 
 def slugify(text, flag='-'):
@@ -46,13 +45,12 @@ def charthandler(handler):
         appstate = _create_chart(handler)
         return appstate
     elif handler.request.method == 'GET':
-        # handler.set_header('Content-Type', 'text/html')
         handler.kwargs.headers['Content-Type'] = 'text/html'
         row = gramex.data.filter(IDESTOREDB, table='chart', args={'id': handler.path_args})
-        spec = json.loads(row['config'].values[0]).get('spec')
+        config = row['config'].values[0]
 
-        return gramex.cache.open('embed.template.html', 'template').generate(myvalue = {
-            'spec': spec
+        return gramex.cache.open(os.path.join(_DIR, 'embed.template.html'), 'template').generate(myvalue = {
+            'spec': config
         }).decode('utf-8')
 
 
@@ -64,10 +62,10 @@ def _create_chart(handler):
         'id': randid(),
         'time': time.time(),
         'user': user,
-        'config': json.dumps(hargs),
+        'config': json.dumps(hargs.spec),
         'name': hargs.chartname,
         'slug': chartname
     }
     gramex.data.insert(IDESTOREDB, table='chart', args=unflatten(args))
     appstate = {'chart': args}
-    return appstate
+    return json.dumps(appstate)

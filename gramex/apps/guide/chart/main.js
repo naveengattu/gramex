@@ -360,13 +360,15 @@ $('body')
   .on('click', '.publish', function() {
     // generate unique url for current spec
     // POST request to formhandler URL
-    $.post('/_chartogram/', JSON.stringify({
+    $.post('_chartogram/', JSON.stringify({
         chartname: specName,
         spec: model.vega_spec
-    })).done(function(response) {
+    }), function (response) {
       // create an URL with response.id
-
-    })
+      var link = location.href.split('example.html')[0] + '_chartogram/' + response.chart.id
+      $('.share-url').html(link)
+      $('.share-url').attr("href", link)
+    }, 'json')
   })
 
 
