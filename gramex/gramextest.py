@@ -54,7 +54,7 @@ def pytest_collect_file(parent, path):
 def pytest_runtest_teardown(item, nextitem):
     if nextitem is None:
         for browser, driver in drivers.items():
-            driver.close()
+            driver.quit()
 
 
 class YamlFile(pytest.File):
