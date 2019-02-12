@@ -1,7 +1,7 @@
 variables:
   BASE: http://localhost:1234
 
-not urltest:
+urltest:
   - fetch: $BASE
     code: 200
     html:
@@ -56,7 +56,9 @@ browsers:
 
 uitest:
   - fetch: $BASE
-    find h1: Gramex Guide
+  - title: Gramex Guide
+  - title: [starts with, Gramex]
+  - find h1: Gramex Guide
     find nav ul > li > a: {.length: [greater than, 30], href: true}
     type input: googleauth
     'find #searchresults > div': {.length: 3}

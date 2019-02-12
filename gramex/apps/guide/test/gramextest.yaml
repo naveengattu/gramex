@@ -37,8 +37,9 @@ browsers:               # Open multiple browsers to run UI tests
 
 uitest:                             # Run UI tests in the browser on the URL
   - fetch: https://www.google.com/  # Fetch this URL in the browser
-    # find title: Google              # Find CSS selector "title" has the text Google
-    find xpath //input[@title]:     # Find the first input node that has a title using XPath
+  - title: Google                   # Title should match Google
+  - title: [starts with, Goo]       # Title should start with "Goo"
+  - find xpath //input[@title]:     # Find the first input node that has a title using XPath
       name: 'q'                     #   The attribute name= should be "q"
     type xpath //input[@title]: gramener   # Type "gramener" in the input
   - find xpath //input[@title]:     # The same input has

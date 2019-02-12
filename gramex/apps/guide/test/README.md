@@ -100,6 +100,9 @@ them to your PATH.
 Once you set up the [browsers](#browsers), you can use thes `uitest:` actions:
 
 - `fetch`: fetches the URL via a GET request
+- `title: <match>`: checks if the title [matches](#matches)
+    - `title: Google` => page title must be Google
+    - `title: [starts with, Goo]` => page title must start with Goo
 - `find <selector>`: finds a CSS/XPath selector and tests its attributes.
     - `find .item: true` => page must have a `.item` selector
     - `find .item: false` => page must not have a `.item` selector.

@@ -206,6 +206,9 @@ class UITest(object):
                 actual = node.get_attribute(key)
             match(actual, expected, msg, key)
 
+    def title(self, text):
+        match(self.driver.title, text, 'title:')
+
     def fetch(self, url):
         self.driver.get(url)
 
