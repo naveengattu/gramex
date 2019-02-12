@@ -18,9 +18,8 @@ Run it using `pytest` or `pytest gramextest.yaml`:
 You can run [specific tests](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests)
 by mentioning its name. For example:
 
-- `pytest -k urltest` -- run all `urltest:`
-- `pytest -k urltest:4` -- run the 4th `urltest`
-- `pytest -k uitest:3:Chrome` -- run the 3rd `uitest` on Chrome
+- `pytest -k "home-page"` -- run all tests matching `home-page`
+- `pytest -k "home-page AND title"` -- run all tests matching `home-page` AND title
 
 ## Structure
 
@@ -43,6 +42,7 @@ urltest:
 
 Here are the `urltest:` actions:
 
+- `name: <text>`: optional name of the test
 - `fetch`: fetch a URL. Options:
     - `url:` request URL
     - `params`: URL parameters dict. `params: {x: [1, 2], y: 3}` => `?x=1&x=2&y=3
@@ -99,6 +99,7 @@ them to your PATH.
 
 Once you set up the [browsers](#browsers), you can use thes `uitest:` actions:
 
+- `name: <text>`: optional name of the test
 - `fetch`: fetches the URL via a GET request
 - `title: <match>`: checks if the title [matches](#matches)
     - `title: Google` => page title must be Google

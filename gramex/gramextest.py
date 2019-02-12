@@ -83,11 +83,14 @@ class YamlFile(pytest.File):
 
 class YamlItem(pytest.Item):
     def __init__(self, name, parent, actions, registry):
-        super(YamlItem, self).__init__(name, parent)
         if isinstance(actions, string_types):
             actions = {actions: {}}
         self.run = []
+        self.name = name
         for action, options in actions.items():
+            if action == 'name':
+                self.name = str(options)
+                continue
             # PY3: cmd, *arg = action.strip().split(maxsplit=1)
             parts = action.strip().split(None, 1)
             cmd, arg = (parts[0], parts[1:]) if len(parts) > 1 else (parts[0], [])
@@ -103,6 +106,8 @@ class YamlItem(pytest.Item):
             else:
                 # e.g. fetch: <url> and test: <selector>
                 self.run.append([method, [options], {}])
+
+        super(YamlItem, self).__init__(self.name, parent)
 
     def runtest(self):
         for method, args, kwargs in self.run:
