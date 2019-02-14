@@ -42,12 +42,21 @@ url:
             path: $YAMLPATH
             default_filename: README.md
             index: true
-            transform:
+            transform: &MARKDOWN_TO_HTML
                 "*.md":
                     function: guide.markdown_template(content, handler)
                     encoding: utf-8
                     headers:
                         Content-Type: text/html
+            headers:
+                Cache-Control: public, max-age=300
+    markdown-g1:
+        pattern: /$YAMLURL/g1/(.*)
+        handler: FileHandler
+        kwargs:
+            path: $YAMLPATH/../ui/node_modules/g1/
+            transform: *MARKDOWN_TO_HTML
+            default_filename: README.md
             headers:
                 Cache-Control: public, max-age=300
     # The welcome page is the first page that's served when users login.
